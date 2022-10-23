@@ -1,0 +1,55 @@
+— > O que define uma árvore binária?
+    Uma estrutura de ramificação, onde cada nó pode ter no máximo dois
+    filhos diretos. Além de cada nível n ter no máximo 2^n nós;
+
+— > Supondo uma árvore binária com os seguintes nós:
+    A(root), B(sub-árvore esquerda), C(sub-árvore direita)
+
+    B é descendente à esquerda de A e A é ancestral de B;
+    C é descendente à direita de A e A é ancestral de C;
+    Consequentemente, os nós B e C são irmãos, pois são filhos de A;
+
+— > Cada ramificação deve possuir necessariamente, um único pai;
+— > Se uma árvore possui n nós no nível m, ela terá no máximo 2n nós
+    no nível m+1;
+
+— > Operações que desejamos realizar em uma árvore binária:
+
+    Filho a esquerda de um nó, filho a direita de um nó;
+    Pai de um nó, Irmão de um nó;
+    Nó a esqueda de um nó (true/false), Nó a direita de um nó;
+    Adicionar um filho esquesdo, adicionar um filho direito;
+    Liberar um nó e seus descendentes, ou seja, excluir o nó;
+
+— > Percursos de navegação em uma árvore:
+    preOrdem: nó atual, filho esquerdo, filho direito;
+        Acessa o nó, enquanto tiver filho esquerdo continua acessando, caso não
+        tenha filho esquerdo, acesse o filho direito
+        OBS: Voltando de um filho direito, retorna ao pai e verifica o novo filho direito
+        A B D G C E H I F
+
+    emOrdem: filho esquerdo, nó atual, filho direito;
+        Acessa o filho esquerdo enquanto existir, caso não exista, acesse o nó
+        atual e por fim, acesse o filho direito
+        OBS: Voltando de um filho direito, retorna ao pai do nó já processado
+        D G B A H E I C F
+
+    posOrdem: filho esquerdo, filho direito, nó atual;
+        Acessa o filho esquerdo enquanto existir, caso não exista, acesse o nó
+        direito e por fim, acesse o nó atual
+        OBS: Voltando de um filho direito, processa o nó atual
+        G D B H I E F C A
+
+— > Uma raíz que não possui filhos é uma folha?
+    Sim, ao criar uma árvore este único nó é raíz e folha inicialmente;
+— > O conceito de "index" em banco de dados utiliza-se de árvores binárias?
+
+01: Prática de navegação em árvores:
+    preOrdem: A B C E I F J D G H K L
+    emOrdem: E I C F J B G D K H L A
+    posOrdem: I E J F C G K L H D B A
+
+02: Prática de navegação em árvores:
+    preOrdem: 14 4 3 10 22 18 25
+    emOrdem: 3 4 10 14 18 22 25
+    posOrdem: 3 10 4 18 25 22 14
