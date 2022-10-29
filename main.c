@@ -16,20 +16,32 @@ int isLeft(node *n);
 int isRight(node *n);
 node *brother(node *n);
 
-node *addLeft(node *n, int value);
-node *setNodeLeft(node *t, node *n);
-node *addRight(node *n, int value);
-node *setNodeRight(node *t, node *n);
-void freeTree(node *t);
+node *addLeft(node *tree, int value);
+node *setNodeLeft(node *tree, node *n);
+node *addRight(node *tree, int value);
+node *setNodeRight(node *tree, node *n);
+void freeTree(node *tree);
+void verifyParent(node *tree);
+void freePosOrdem(node *tree);
 
-void preOrdem(node *t);
-void emOrdem(node *t);
-void posOrdem(node *t);
+void preOrdem(node *tree);
+void emOrdem(node *tree);
+void posOrdem(node *tree);
+
+int isLeaf(node *n);
+node *root(node *n);
+int level(node *n);
+int depth(node *n);
+int isEstrita(node *tree);
+int isCompleta(node *tree);
+int length(node *tree);
+int larger(node *tree);
+int sum(node *tree);
 
 int main() {
     setlocale(LC_ALL, "");
-    node *tree = makeTree(14);
 
+    node *tree = makeTree(14);
     addLeft(addLeft(tree, 4), 3);
     addRight(left(tree), 10);
     addLeft(addRight(tree, 22), 18);
@@ -44,106 +56,116 @@ int main() {
     printf("\n");
 
     return 0;
-}
+};
 
 node *makeTree(int value) {
-    node *tree = (node *) malloc(sizeof (node));
-    tree->info = value;
-    tree->father = tree->left = tree->right = NULL;
+    node *n = (node *) malloc(sizeof (node));
+    n->info = value;
+    n->right = n->left = n->father = NULL;
 
-    return tree;
+    return n;
 }
 
 int info(node *n) {
-    return n != NULL ? n->info : printf("O nó recebido é NULL!\n");
+    return n == NULL ? printf("Unable to access information from a null node\n") : n->info;
 }
 
 node *left(node *n) {
-    if(n == NULL) printf("O nó recebido não possui filho esquerdo!\n");
+    if(n == NULL) printf("Cannot access child of a null node\n");
     else return n->left;
 }
 
 node *right(node *n) {
-    if(n == NULL) printf("O nó recebido não possui filho esquerdo!\n");
+    if(n == NULL) printf("Cannot access child of a null node\n");
     else return n->right;
 }
 
 node *father(node *n) {
-    if(n == NULL || n->father == NULL) printf("O nó recebido é o nó raiz!\n");
-    else return n->father;
+    return n->father;
 }
 
 int isLeft(node *n) {
-    if(n == NULL) return printf("O nó recebido é NULL!\n");
-    else return left(father(n)) == n ? 1 : 0;
+    return father(n) == NULL ? 0 : left(father(n)) == n ? 1 : 0;
 }
 
 int isRight(node *n) {
-    if(n == NULL) return printf("O nó recebido é NULL!\n");
-    else return right(father(n)) == n ? 1 : 0;
+    return father(n) == NULL ? 0 : right(father(n)) == n ? 1 : 0;
 }
 
 node *brother(node *n) {
-    if(father(n) == NULL) return NULL;
-    else return isLeft(n) == 1 ? right(father(n)) : left(father(n));
+    if(father(n)) return isLeft(n) ? right(father(n)) : left(father(n));
+    else return NULL;
 }
 
-node *addLeft(node *n, int value) {
-    return setNodeLeft(n, makeTree(value));
+node *addLeft(node *tree, int value) {
+    return setNodeLeft(tree, makeTree(value));
 }
 
-node *setNodeLeft(node *t, node *n) {
-    t->left = n;
-    n->father = t;
+node *setNodeLeft(node *tree, node *n) {
+    tree->left = n;
+    n->father = tree;
 
     return n;
 }
 
-node *addRight(node *n, int value) {
-    return setNodeRight(n, makeTree(value));
+node *addRight(node *tree, int value) {
+    return setNodeRight(tree, makeTree(value));
 }
 
-node *setNodeRight(node *t, node *n) {
-    t->right = n;
-    n->father = t;
+node *setNodeRight(node *tree, node *n) {
+    tree->right = n;
+    n->father = tree;
 
     return n;
 }
 
-void freeTree(node *t) {
-    node *aux = father(t);
-
-    if(t != NULL) {
-        if(aux && isLeft(t)) aux->left = NULL;
-        if(aux && isRight(t)) aux->right = NULL;
-
-        freeTree(left(t));
-        freeTree(right(t));
-        free(t);
+void freeTree(node *tree) {
+    if(tree != NULL) {
+        verifyParent(tree);
+        freePosOrdem(tree);
     }
-    else printf("O nó recebido é NULL!\n");
+    else printf("Unable to free a null node from memory\n");
 }
 
-void preOrdem(node *t) {
-    if(t != NULL) {
-        printf("[%d]", info(t));
-        preOrdem(left(t));
-        preOrdem(right(t));
+void verifyParent(node *tree) {
+    node *parent = father(tree);
+
+    if(parent != NULL) {
+        if(isLeft(tree)) parent->left = NULL;
+        else parent->right = NULL;
     }
+    else return;
 }
 
-void emOrdem(node *t) {
-    if(t != NULL) {
-        emOrdem(left(t));
-        printf("[%d]", info(t));
-        emOrdem(right(t));
-    }
+void freePosOrdem(node *tree) {
+    freeTree(left(tree));
+    freeTree(right(tree));
+    free(tree);
 }
 
-void posOrdem(node *t) {
-    if(t != NULL) {
-        posOrdem(left(t));
-        posOrdem(right(t));
-        printf("[%d]", info(t));
+void preOrdem(node *tree) {
+    if(tree != NULL) {
+        printf("[%d]", info(tree));
+        preOrdem(left(tree));
+        preOrdem(right(tree));
     }
+    else return;
+}
+
+void emOrdem(node *tree) {
+    if(tree != NULL) {
+        emOrdem(left(tree));
+        printf("[%d]", info(tree));
+        emOrdem(right(tree));
+    }
+    else return;
+}
+
+void posOrdem(node *tree) {
+    if(tree != NULL) {
+        posOrdem(left(tree));
+        posOrdem(right(tree));
+        printf("[%d]", info(tree));
+    }
+    else return;
 }
