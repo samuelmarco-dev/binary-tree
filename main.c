@@ -47,14 +47,15 @@ int main() {
     addLeft(addRight(tree, 22), 18);
     addRight(right(tree), 25);
 
-    printf("Pre-ordem: ");
+    printf("Pré-ordem: ");
     preOrdem(tree);
     printf("\nEm ordem: ");
     emOrdem(tree);
-    printf("\nPos-ordem: ");
+    printf("\nPós-ordem: ");
     posOrdem(tree);
     printf("\n");
 
+    freeTree(tree);
     return 0;
 };
 
@@ -124,7 +125,7 @@ void freeTree(node *tree) {
         verifyParent(tree);
         freePosOrdem(tree);
     }
-    else printf("Unable to free a null node from memory\n");
+    else return;
 }
 
 void verifyParent(node *tree) {
@@ -168,4 +169,40 @@ void posOrdem(node *tree) {
         printf("[%d]", info(tree));
     }
     else return;
+}
+
+int isLeaf(node *n) {
+    return left(n) == NULL && right(n) == NULL;
+}
+
+node *root(node *n) {
+
+}
+
+int level(node *n) {
+
+}
+
+int depth(node *n) {
+
+}
+
+int isEstrita(node *tree) {
+
+}
+
+int isCompleta(node *tree) {
+
+}
+
+int length(node *tree) {
+
+}
+
+int larger(node *tree) {
+
+}
+
+int sum(node *tree) {
+
 }

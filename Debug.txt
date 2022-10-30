@@ -1,0 +1,93 @@
+Pré-ordem: 
+Chamada da função... 14
+[14]
+Chamada da função... 4
+[4]
+Chamada da função... 3
+[3]
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+Chamada da função... 10
+[10]
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+Chamada da função... 22
+[22]
+Chamada da função... 18
+[18]
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+Chamada da função... 25
+[25]
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+
+
+Em ordem: 
+Chamada da função... 14
+Chamada da função... 4
+Chamada da função... 3
+Chamada da função... NULL => return
+[3]
+Chamada da função... NULL => return
+[4]
+Chamada da função... 10
+Chamada da função... NULL => return 
+[10]
+Chamada da função... NULL => return 
+[14]
+Chamada da função... 22
+Chamada da função... 18
+Chamada da função... NULL => return
+[18]
+Chamada da função... NULL => return
+[22]
+Chamada da função... 25
+Chamada da função... NULL => return
+[25]
+Chamada da função... NULL => return 
+
+
+Pós-ordem: 
+Chamada da função... 14
+Chamada da função... 4
+Chamada da função... 3
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+[3]
+Chamada da função... 10
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+[10]
+[4]
+Chamada da função... 22
+Chamada da função... 18 
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+[18]
+Chamada da função... 25
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+[25]
+[22]
+[14]
+
+
+FreeTree:
+Chamada da função... 14
+Chamada da função... 4
+Chamada da função... 3
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+Chamada da função... 10
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+Chamada da função... 22
+Chamada da função... 18
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+Chamada da função... 25
+Chamada da função... NULL => return
+Chamada da função... NULL => return
+
+
