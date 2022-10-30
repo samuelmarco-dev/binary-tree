@@ -32,6 +32,8 @@ int isLeaf(node *n);
 node *root(node *n);
 int level(node *n);
 int depth(node *n);
+int max(int a, int b);
+int treeDepth(node *tree);
 int isEstrita(node *tree);
 int isCompleta(node *tree);
 int length(node *tree);
@@ -47,15 +49,16 @@ int main() {
     addLeft(addRight(tree, 22), 18);
     addRight(right(tree), 25);
 
-    printf("Pré-ordem: ");
-    preOrdem(tree);
-    printf("\nEm ordem: ");
-    emOrdem(tree);
-    printf("\nPós-ordem: ");
-    posOrdem(tree);
-    printf("\n");
+//    printf("Pré-ordem: ");
+//    preOrdem(tree);
+//    printf("\nEm ordem: ");
+//    emOrdem(tree);
+//    printf("\nPós-ordem: ");
+//    posOrdem(tree);
+//    printf("\n");
+//
+//    freeTree(tree);
 
-    freeTree(tree);
     return 0;
 };
 
@@ -176,33 +179,52 @@ int isLeaf(node *n) {
 }
 
 node *root(node *n) {
-
+    return father(n) != NULL ? root(father(n)) : n;
 }
 
 int level(node *n) {
+    return father(n) == NULL ? 0 : level(father(n)) + 1;
+}
 
+int max(int a, int b) {
+    return a > b ? a : b;
 }
 
 int depth(node *n) {
+    if(n == NULL || isLeaf(n)) return 0;
+    return max(depth(left(n)), depth(right(n))) + 1;
+}
 
+int treeDepth(node *tree) {
+    return depth(root(tree));
 }
 
 int isEstrita(node *tree) {
-
+    if(tree == NULL) return 0;
+    else return isLeft(tree) ? 1
+    : isEstrita(left(tree)) && isEstrita(right(tree));
 }
 
 int isCompleta(node *tree) {
-
+    if(tree == NULL) return 0;
+    else return isLeft(tree) ? level(tree) == treeDepth(tree)
+    : isCompleta(left(tree)) && isCompleta(right(tree));
 }
 
 int length(node *tree) {
-
+    if(tree == NULL) return 0;
+    else return length(left(tree)) + length(right(tree)) + 1;
 }
 
 int larger(node *tree) {
-
+    if(tree == NULL) return 0;
+    else {
+        int current = max(larger(left(tree)), larger(right(tree)));
+        return max(info(tree), current);
+    }
 }
 
 int sum(node *tree) {
-
+    if(tree == NULL) return 0;
+    else return sum(left(tree)) + sum(right(tree)) + info(tree);
 }
