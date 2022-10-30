@@ -40,6 +40,15 @@ int length(node *tree);
 int larger(node *tree);
 int sum(node *tree);
 
+int lengthLeaf(node *tree);
+int sumLeaf(node *tree);
+int search(node *tree, int value);
+int min(int a, int b);
+int smaller(node *tree);
+int diff(node *tree);
+int sumNotLeaf(node *tree);
+int lengthNotBin(node *tree);
+
 int main() {
     setlocale(LC_ALL, "");
 
@@ -49,16 +58,15 @@ int main() {
     addLeft(addRight(tree, 22), 18);
     addRight(right(tree), 25);
 
-//    printf("Pré-ordem: ");
-//    preOrdem(tree);
-//    printf("\nEm ordem: ");
-//    emOrdem(tree);
-//    printf("\nPós-ordem: ");
-//    posOrdem(tree);
-//    printf("\n");
-//
-//    freeTree(tree);
+    printf("Pré-ordem: ");
+    preOrdem(tree);
+    printf("\nEm ordem: ");
+    emOrdem(tree);
+    printf("\nPós-ordem: ");
+    posOrdem(tree);
+    printf("\n");
 
+    freeTree(tree);
     return 0;
 };
 
@@ -227,4 +235,51 @@ int larger(node *tree) {
 int sum(node *tree) {
     if(tree == NULL) return 0;
     else return sum(left(tree)) + sum(right(tree)) + info(tree);
+}
+
+int lengthLeaf(node *tree) {
+    if(tree == NULL) return 0;
+    else return isLeaf(tree) ? 1 : lengthLeaf(left(tree)) + lengthLeaf(right(tree));
+}
+
+int sumLeaf(node *tree) {
+    if(tree == NULL) return 0;
+    else return isLeft(tree) ? info(tree) : sumLeaf(left(tree)) + sumLeaf(right(tree));
+}
+
+int search(node *tree, int value) {
+    if(info(tree) == value) return 1;
+
+    if(tree != NULL) {
+        search(left(tree), value);
+        search(right(tree), value);
+    }
+    else return 0;
+}
+
+int min(int a, int b) {
+    return a > b ? b : a;
+}
+
+int smaller(node *tree) {
+    if(tree == NULL) return 0;
+    else {
+        int current = min(smaller(left(tree)), smaller(right(tree)));
+        return min(info(tree), current);
+    }
+}
+
+int diff(node *tree) {
+    return larger(tree) - smaller(tree);
+}
+
+int sumNotLeaf(node *tree) {
+    if(tree == NULL || isLeaf(tree)) return 0;
+    else return sumNotLeaf(left(tree)) + sumNotLeaf(right(tree)) + info(tree);
+}
+
+int lengthNotBin(node *tree) {
+    if(tree == NULL) return 0;
+    else return left(tree) == NULL || right(tree) == NULL ?
+    lengthNotBin(left(tree)) + lengthNotBin(right(tree)) + 1 : 0;
 }
