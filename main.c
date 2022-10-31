@@ -48,6 +48,7 @@ int smaller(node *tree);
 int diff(node *tree);
 int sumNotLeaf(node *tree);
 int lengthNotBin(node *tree);
+int lenghtNodeInLevel(node *n, int lv);
 
 int main() {
     setlocale(LC_ALL, "");
