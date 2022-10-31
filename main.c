@@ -226,6 +226,8 @@ int length(node *tree) {
 
 int larger(node *tree) {
     if(tree == NULL) return 0;
+    
+    if(isLeaf(tree)) return info(tree);
     else {
         int current = max(larger(left(tree)), larger(right(tree)));
         return max(info(tree), current);
@@ -250,10 +252,7 @@ int sumLeaf(node *tree) {
 int search(node *tree, int value) {
     if(info(tree) == value) return 1;
 
-    if(tree != NULL) {
-        search(left(tree), value);
-        search(right(tree), value);
-    }
+    if(tree != NULL) return search(left(tree), value) || search(right(tree), value);
     else return 0;
 }
 
@@ -262,7 +261,9 @@ int min(int a, int b) {
 }
 
 int smaller(node *tree) {
-    if(tree == NULL) return 0;
+    if(tree == NULL) return 9999;
+    
+    if(isLeaf(tree)) return info(tree);
     else {
         int current = min(smaller(left(tree)), smaller(right(tree)));
         return min(info(tree), current);
@@ -282,4 +283,17 @@ int lengthNotBin(node *tree) {
     if(tree == NULL) return 0;
     else return left(tree) == NULL || right(tree) == NULL ?
     lengthNotBin(left(tree)) + lengthNotBin(right(tree)) + 1 : 0;
+    
+    /*
+        if(tree == NULL) return 1;
+        if(isLeaf(tree)) return 0;
+        
+        return lengthNotBin(left(tree)) + lengthNotBin(rigth(tree));
+    */
+}
+
+int lenghtNodeInLevel(node *n, int lv) {
+    if(n == NULL) return 0;
+    else return level(n) == lv ? 1 
+    : lenghtNodeInLevel(left(n), lv) + lenghtNodeInLevel(right(n), lv);
 }
